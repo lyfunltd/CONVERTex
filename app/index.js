@@ -6,7 +6,8 @@ import Navigator from "./config/routes";
 
 import Home from "./screens/Home";
 import CurrencyList from "./screens/CurrencyList";
-
+import { Provider } from "react-redux";
+import store from "./config/store";
 EStyleSheet.build({
   $secondaryColor: "#3A3232",
   $white: "#FFFFFF",
@@ -26,4 +27,9 @@ EStyleSheet.build({
 //export default () => <CurrencyList />;
 //export default () => <Options />;
 //export default () => <Themes />;
-export default () => <Navigator />;
+//export default () => <Navigator />;
+export default () => (
+  <Provider store={store}>
+    <Navigator onNavigationStateChange={null} />
+  </Provider>
+);

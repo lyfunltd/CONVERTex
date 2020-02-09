@@ -7,6 +7,8 @@ import { Logo } from "../components/Logo";
 import { ClearButton } from "../components/Button";
 import { LastConverted } from "../components/Text";
 import { Header } from "../components/Header";
+import { changeCurrencyAmount, swapCurrency } from "../actions/currencies";
+import { connect } from "react-redux";
 const TEMP_BASE_CURRENCY = "USD";
 const TEMP_QUOTE_CURRENCY = "GBP";
 const TEMP_BASE_PRICE = "100";
@@ -16,15 +18,20 @@ const TEMP_CONVERSION_RATE = 0.79739;
 
 class Home extends Component {
   static propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    dispatch: PropTypes.func
   };
 
-  handleChangeText = () => {
-    console.log("change text");
+  handleChangeText = text => {
+    // TODO: Dispatch this action to redux
+    const { dispatch } = this.props;
+    dispatch(changeCurrencyAmount(text));
   };
 
   handleSwapCurrency = () => {
-    console.log("handle swap currency");
+    // TODO: Dispatch this action to redux
+    const { dispatch } = this.props;
+    dispatch(swapCurrency());
   };
 
   handlePressBaseCurrency = () => {
@@ -81,4 +88,5 @@ class Home extends Component {
   }
 }
 
-export default Home;
+//export default Home;
+export default connect()(Home);
