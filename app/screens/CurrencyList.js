@@ -13,7 +13,9 @@ const TEMP_CURRENT_CURRENCY = "CAD";
 class CurrencyList extends Component {
   static propTypes = {
     navigation: PropTypes.object,
-    dispatch: PropTypes.func
+    dispatch: PropTypes.func,
+    baseCurrency: PropTypes.string,
+    quoteCurrency: PropTypes.string
   };
   handlePress = currency => {
     const { navigation, dispatch } = this.props;
@@ -28,6 +30,11 @@ class CurrencyList extends Component {
   };
 
   render() {
+    const { baseCurrency, quoteCurrency, navigation } = this.props;
+    let comparisonCurrency = baseCurrency;
+    if (navigation.state.params.type === "quote") {
+      comparisonCurrency = quoteCurrency;
+    }
     return (
       <View style={{ flex: 1 }}>
         <StatusBar translucent={false} barStyle='default' />
@@ -36,7 +43,7 @@ class CurrencyList extends Component {
           renderItem={({ item }) => (
             <ListItem
               text={item}
-              selected={item === TEMP_CURRENT_CURRENCY}
+              selected={item === comparisonCurrency}
               onPress={this.handlePress}
               onPress={() => this.handlePress(item)}
             />
@@ -49,4 +56,9 @@ class CurrencyList extends Component {
   }
 }
 
-export default connect()(CurrencyList);
+const mapStateToProps = state => ({
+  baseCurrency: state.currencies.baseCurrency,
+  quoteCurrency: state.currencies.quoteCurrency
+});
+
+export default connect(mapStateToProps)(CurrencyList);
