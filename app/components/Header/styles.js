@@ -9,9 +9,6 @@ export default EStyleSheet.create({
     right: 0,
     "@media ios": {
       paddingTop: 45
-    },
-    "@media android": {
-      paddingTop: StatusBar.currentHeight
     }
   },
   button: {
