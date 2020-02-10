@@ -7,6 +7,7 @@ import { Logo } from "../components/Logo";
 import { ClearButton } from "../components/Button";
 import { LastConverted } from "../components/Text";
 import { Header } from "../components/Header";
+import { connectAlert } from "../components/Alert";
 import {
   changeCurrencyAmount,
   swapCurrency,
@@ -30,11 +31,19 @@ class Home extends Component {
     conversionRate: PropTypes.number,
     lastConvertedDate: PropTypes.object,
     isFetching: PropTypes.bool,
-    primaryColor: PropTypes.string
+    primaryColor: PropTypes.string,
+    currencyError: PropTypes.string,
+    alertWithType: PropTypes.func
   };
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(getInitialConversion());
+  }
+  componentWillReceiveProps(nextProps) {
+    const { currencyError, alertWithType } = this.props;
+    if (nextProps.currencyError && !currencyError) {
+      alertWithType("error", "Error", nextProps.currencyError);
+    }
   }
 
   handleChangeText = text => {
@@ -145,8 +154,9 @@ const mapStateToProps = state => {
       ? new Date(conversionSelector.date)
       : new Date(),
     isFetching: conversionSelector.isFetching,
-    primaryColor: state.theme.primaryColor
+    primaryColor: state.theme.primaryColor,
+    currencyError: state.currencies.error
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(connectAlert(Home));
