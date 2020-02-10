@@ -90,7 +90,7 @@ class Logo extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Currency Converter</Text>
+        <Text style={styles.text}>CONVERTEX</Text>
       </View>
     );
   }
