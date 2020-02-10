@@ -7,7 +7,11 @@ import { Logo } from "../components/Logo";
 import { ClearButton } from "../components/Button";
 import { LastConverted } from "../components/Text";
 import { Header } from "../components/Header";
-import { changeCurrencyAmount, swapCurrency } from "../actions/currencies";
+import {
+  changeCurrencyAmount,
+  swapCurrency,
+  getInitialConversion
+} from "../actions/currencies";
 import { connect } from "react-redux";
 const TEMP_BASE_CURRENCY = "USD";
 const TEMP_QUOTE_CURRENCY = "GBP";
@@ -28,6 +32,10 @@ class Home extends Component {
     isFetching: PropTypes.bool,
     primaryColor: PropTypes.string
   };
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(getInitialConversion());
+  }
 
   handleChangeText = text => {
     // TODO: Dispatch this action to redux
